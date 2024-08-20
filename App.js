@@ -9,9 +9,10 @@ import CourseRoutes from "./Kanbas/Courses/routes.js";
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 import cors from "cors";
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
-mongoose.connect(CONNECTION_STRING);
-mongoose.connect(CONNECTION_STRING);
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
+mongoose.connect(CONNECTION_STRING)
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch(err => console.error("MongoDB connection error:", err));
 const app = express();
 app.use(cors({
     credentials: true,
@@ -39,4 +40,6 @@ CourseRoutes(app);
 AssignmentRoutes(app);
 Lab5(app)
 Hello(app)
-app.listen(process.env.PORT || 4000)
+app.listen(process.env.PORT || 4000, () => {
+    console.log(`Server is running on port ${process.env.PORT || 4000}`);
+  });
